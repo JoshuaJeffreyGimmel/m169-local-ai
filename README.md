@@ -22,14 +22,17 @@ The `ollama` and `dcgm-exporter` services in this configuration are explicitly c
 ## 🚀 Getting Started
 
 ### 1. Configuration & Security (Crucial Step)
-Before spinning up the containers, you **must** change the default placeholder credentials to secure your stack. 
+This project uses a `.env` file to manage environment variables centrally. Before spinning up the containers, you **must** open the `.env` file and replace the placeholder text with your actual secure keys:
 
-Open your `docker-compose.yml` file and update the following:
-* **`WEBUI_SECRET_KEY`** (under `open-webui`): Change the default string to a long, random sequence to secure user sessions.
-* **Database Passwords:** Change the password in the `DATABASE_URL` (under `litellm`) and the `POSTGRES_PASSWORD` (under `db`). They must match exactly.
+* **`LITELLM_MASTER_KEY` & `LITELLM_SALT_KEY`:** Generate secure tokens starting with `sk-` for your proxy router.
+* **Database Credentials:** Update `POSTGRES_PASSWORD` with a strong password, and ensure you update the password segment inside the `DATABASE_URL` string to match it exactly.
+* **`WEBUI_SECRET_KEY`:** Replace with a long, random string to secure Open WebUI user sessions.
+* **`GRAFANA_ADMIN_PASSWORD`:** Set your custom admin password for the Grafana dashboard.
+
+> 🔒 **Security Reminder:** Never commit your filled-out `.env` file to public version control systems like GitHub!
 
 ### 2. Launching the Stack
-Run the following command in the root directory of your project to download the images and start the services in the background:
+Run the following command in the root directory of your project to download the images and start all services in the background:
 
 ```bash
 docker compose up -d
